@@ -1,20 +1,25 @@
 package com.evilspawn.tutorialmod;
 
 import com.evilspawn.tutorialmod.init.BlockInit;
+import com.evilspawn.tutorialmod.world.gen.TutorialOreGen;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @Mod("tutorialmod")
+@Mod.EventBusSubscriber(modid = TutorialMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+
 public class TutorialMod
 {
     public static final Logger LOGGER = LogManager.getLogger();
@@ -33,13 +38,16 @@ public class TutorialMod
     private void setup(final FMLCommonSetupEvent event) { }
     private void doClientStuff(final FMLClientSetupEvent event) { }
 
-    public static class TutorialItemGroup extends ItemGroup {
+    @SubscribeEvent
+    public static void loadCompleteEvent(FMLLoadCompleteEvent event) {
+        TutorialOreGen.generateOre();
+    }
 
+    public static class TutorialItemGroup extends ItemGroup {
         public static final TutorialItemGroup instance = new TutorialItemGroup(ItemGroup.GROUPS.length, "tutorialtab");
         private TutorialItemGroup(int index, String label) {
             super(index, label);
         }
-
         @Override
         public ItemStack createIcon() {
             return new ItemStack(BlockInit.example_block);

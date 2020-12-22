@@ -17,12 +17,12 @@ public class TestJumpEvent {
 
     @SubscribeEvent
     public static void testJumpEvent(LivingEvent.LivingJumpEvent event) {
-        TutorialMod.LOGGER.info("Test jump event is fired");
+        // TutorialMod.LOGGER.info("Test jump event is fired");
         LivingEntity livingEntity = event.getEntityLiving();
-        World world = livingEntity.getEntityWorld();
-        world.setBlockState(livingEntity.getPosition().add(0, 5, 0), BlockInit.example_block.getDefaultState());
-        livingEntity.addPotionEffect(new EffectInstance(Effects.JUMP_BOOST, 600, 255));
+        // World world = livingEntity.getEntityWorld();
+        // world.setBlockState(livingEntity.getPosition().add(0, 5, 0), BlockInit.example_block.getDefaultState());
+        livingEntity.addPotionEffect(new EffectInstance(Effects.JUMP_BOOST, 600, 2));
         livingEntity.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 600, 255));
-        livingEntity.setGlowing(true);
+        // livingEntity.setGlowing(true);
     }
 }
